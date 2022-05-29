@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  good_day2:
+    container_name: good_day
+    restart: always
+    build:
+      context: .
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db2
+    links:
+      - "db2:db2"
+    env_file:
+      - .env
+    volumes:
+      - ./:/home/skoky/Documents/Projects/App/src/hello-world/app
+    command: sh start.sh
+  db2:
+    container_name: adonisDB
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: database
+    ports:
+      - ${PG_PORT}:${PG_PORT}
+    #volumes:
+    #  - db-data:/var/lib/postgresql/data
+#volumes:
+#  db-data:
+ #   driver: local
