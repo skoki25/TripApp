@@ -14,7 +14,7 @@ COPY --chown=node:node /API/package-lock.json .
 RUN npm ci
 COPY --chown=node:node . .
 
-COPY start.sh /home/skoky/Documents/Projects/TripApp/TripApp/src/API/
+COPY /API/start.sh /home/skoky/Documents/Projects/TripApp/TripApp/src/API/
 FROM dependencies AS build
 RUN node ace build --production
 
@@ -25,5 +25,6 @@ ENV HOST=0.0.0.0
 COPY --chown=node:node ./package*.json ./
 RUN npm ci --production
 EXPOSE $PORT
+CMD ["node","ace migration:run"]
 CMD ["npm", "start"]
 
