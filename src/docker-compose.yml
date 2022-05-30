@@ -1,23 +1,34 @@
 version: "3"
 
 services:
-  good_day2:
-    container_name: good_day
+  front:
+    container_name: vue
+    restart: always
+    build:
+      context: ./front
+    ports:
+      -8080:8080
+    depends_on:
+      - api
+    volumes:
+      - ./front:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/front
+  api:
+    container_name: api
     restart: always
     build:
       context: .
     ports:
       - ${PORT}:${PORT}
     depends_on:
-      - db2
+      - db
     links:
-      - "db2:db2"
+      - "db:db"
     env_file:
-      - .env
+      - ./API/env
     volumes:
-      - ./:/home/skoky/Documents/Projects/App/src/hello-world/app
+      - ./API:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
     command: sh start.sh
-  db2:
+  db:
     container_name: adonisDB
     image: postgres:14.1-alpine
     environment:
