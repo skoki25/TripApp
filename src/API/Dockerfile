@@ -5,14 +5,17 @@ RUN apk --no-cache add dumb-init
 RUN mkdir -p /home/skoky/Documents/Projects/TripApp/TripApp/src/API/app && chown node:node /home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
 WORKDIR /home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
 USER node
-RUN mkdir tmp
+RUN ls -l
+RUN API/mkdir tmp
 
 FROM base AS dependencies
-COPY --chown=node:node ./package*.json ./
-RUN npm ci
-COPY --chown=node:node . .
+COPY --chown=node:node ./API/package.json .
+COPY --chown=node:node ./API/package-lock.json .
 
-COPY start.sh /home/skoky/Documents/Projects/TripApp/TripApp/src/API/
+RUN npm ci
+COPY --chown=node:node ./API .
+
+COPY /API/start.sh /home/skoky/Documents/Projects/TripApp/TripApp/src/API/
 FROM dependencies AS build
 RUN node ace build --production
 
@@ -20,9 +23,9 @@ FROM base AS production
 ENV NODE_ENV=production
 ENV PORT=$PORT
 ENV HOST=0.0.0.0
-COPY --chown=node:node ./package*.json ./
+COPY --chown=node:node API/package.json ./
+COPY --chown=node:node API/package-lock.json ./
 RUN npm ci --production
-COPY --chown=node:node --from=build /home/skoky/Documents/Projects/TripApp/TripApp/src/API/ ./app
 EXPOSE $PORT
 CMD ["node","ace migration:run"]
 CMD ["npm", "start"]

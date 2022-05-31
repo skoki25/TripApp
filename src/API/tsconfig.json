@@ -9,7 +9,7 @@
   ],
   "compilerOptions": {
     "outDir": "build",
-    "rootDir": "./",
+    "rootDir": "./API",
     "sourceMap": true,
     "paths": {
       "App/*": [
