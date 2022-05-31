@@ -12,8 +12,8 @@ services:
     depends_on:
       - api
     volumes:
-      - ./front:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/front
-      - home/skoky/Documents/Projects/TripApp/TripApp/src/API/front/node_modules
+      - /front:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/front
+      - /front:/home/skoky/Documents/Projects/TripApp/TripApp/src/front/node_modules
   api:
     container_name: api
     restart: always
@@ -29,8 +29,8 @@ services:
     #env_file:
     #  - ./API/env
     volumes:
-      - ./API:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
-    command: sh start.sh
+      - /API:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
+    #command: sh /API/start.sh
   db:
     container_name: adonisDB
     image: postgres:14.1-alpine
