@@ -11,7 +11,7 @@
 | "tests/bootstrap.ts" files.
 |
 */
-/*
+
 process.env.NODE_ENV = 'test'
 
 import 'reflect-metadata'
@@ -38,9 +38,8 @@ kernel
         setup: app.concat(runnerHooks.setup),
         teardown: runnerHooks.teardown,
       },
-      cwd: kernel.application.appRoot
+      cwd: kernel.application.appRoot,
     })
 
     run()
   })
-  */

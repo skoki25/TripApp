@@ -2,35 +2,40 @@ version: "3"
 
 services:
   front:
-    container_name: vue
+    container_name: front
     restart: always
     build:
-      context: .
-      dockerfile: ./front/Dockerfile
+      context: ./front
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 8080:80
     depends_on:
       - api
+    environment:
+      - HOST =0.0.0.0
+      - CHOKIDAR_USEPOLLING="true"
+      - CHOKIDAR_INTERVAL =1000
     volumes:
-      - /front:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/front
-      - /front:/home/skoky/Documents/Projects/TripApp/TripApp/src/front/node_modules
+      - /front:/home/skoky/Documents/Projects/TripApp/TripApp/src/front/app:delegated
+      - /home/skoky/Documents/Projects/TripApp/TripApp/src/front/node_modules
+    #command: sh start.sh
   api:
     container_name: api
     restart: always
     build:
-      context: .
-      dockerfile: ./API/Dockerfile
+      context: ./API
+      dockerfile: Dockerfile
     ports:
       - 3306:3306
     depends_on:
       - db
     links:
       - "db:db"
-    #env_file:
-    #  - ./API/env
+    env_file:
+      - ./API/.env
     volumes:
-      - /API:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
-    #command: sh /API/start.sh
+      - /app:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
+    command: sh start.sh
   db:
     container_name: adonisDB
     image: postgres:14.1-alpine
@@ -39,7 +44,7 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: database
     ports:
-      - 5434:5434
+      - 5432:5432
     #volumes:
     #  - db-data:/var/lib/postgresql/data
 #volumes:
