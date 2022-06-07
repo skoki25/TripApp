@@ -14,8 +14,6 @@ COPY .adonisrc.json ./
 RUN npm ci
 COPY --chown=node:node . .
 
-#COPY start.sh /home/skoky/Documents/Projects/App/src/TripApp/TripApp/API/app
-
 FROM dependencies AS build
 RUN node ace build --production --ignore-ts-errors
 
