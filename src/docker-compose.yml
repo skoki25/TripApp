@@ -7,18 +7,19 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
+    command: npm run serve
     ports:
-      - 8080:80
+      - 8080:80    
     depends_on:
       - api
     environment:
-      - HOST =0.0.0.0
-      - CHOKIDAR_USEPOLLING="true"
-      - CHOKIDAR_INTERVAL =1000
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100
+    stdin_open: true
+    tty: true
     volumes:
-      - /front:/home/skoky/Documents/Projects/TripApp/TripApp/src/front/app:delegated
-      - /home/skoky/Documents/Projects/TripApp/TripApp/src/front/node_modules
-    #command: sh start.sh
+      - ./front:/app     
+      #- /home/skoky/Documents/Projects/TripApp/TripApp/src/front/node_modules
   api:
     container_name: api
     restart: always
