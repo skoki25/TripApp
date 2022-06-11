@@ -15,7 +15,7 @@ export default class UsersController{
     }
 
     public async show({params}: HttpContextContract){
-        const user = User.findOrFail(params.is)
+        const user = User.findOrFail(params.id)
         return user
     }
 
