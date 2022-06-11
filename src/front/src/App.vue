@@ -1,14 +1,23 @@
 <template>
-  <HelloWorld msg="ssssr_+++ You"/>
+  <CreateTrip />
+  <Suspense>
+    <TripTable />
+  </Suspense>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TripTable from './components/TripTable.vue'
+import CreateTrip from './components/CreateTrip.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TripTable,
+    CreateTrip
+  },
+  data(){
+    return{
+    }
   }
 }
 </script>

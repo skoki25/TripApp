@@ -21,16 +21,13 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/user','UsersController.index')
-
 Route.get('/user/:id','UsersController.show')
-
 Route.post('/user','UsersController.store')
-
 Route.put('/user/:id','UsersController.update')
-
 Route.delete('/user','UsersController.delete')
-
 Route.get('/trip','TripsController.index')
+Route.get('/trip/:id','TripsController.tripShow')
+Route.get('/trip/user/:id','TripsController.tripUserShow')
 
 Route.post('/trip','TripsController.sore')
 
