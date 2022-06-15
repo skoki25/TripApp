@@ -22,8 +22,13 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @manyToMany(() => Trip,{
+    pivotForeignKey:'user_id',
+    localKey:'id',
+    relatedKey: 'id',
     pivotColumns:['number_of_person'],
-    pivotForeignKey:'user_id'
   })
   public trip: ManyToMany<typeof Trip>
+ 
+
+  public number_of_person:number
 }

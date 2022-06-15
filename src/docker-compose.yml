@@ -23,6 +23,7 @@ services:
     build:
       context: ./API
       dockerfile: Dockerfile
+    stdin_open: true
     ports:
       - 3306:3306
     depends_on:
@@ -32,7 +33,7 @@ services:
     env_file:
       - ./API/.env
     volumes:
-      - /app:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
+      - ./API:/home/skoky/Documents/Projects/TripApp/TripApp/src/API/app
     command: sh start.sh
   db:
     container_name: adonisDB
