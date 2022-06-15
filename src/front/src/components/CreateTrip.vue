@@ -1,5 +1,5 @@
 <template>
-    <h1>Vytvorenie cesty</h1>
+    <h1>Vytvorenie cestyg</h1>
     <Datepicker />
 </template>
 

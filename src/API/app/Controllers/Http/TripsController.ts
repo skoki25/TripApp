@@ -1,14 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Trip from 'App/Models/Trip'
-import Users from 'Database/migrations/1651872045744_users'
-
 export default class TripsController {
 
     public async index(){
         const trip = await Trip.query()
             .preload("typTrip")
             .preload("tripPrice")
-            .preload("users")
+            .preload("users", (query) => {
+                query.pivotColumns(['number_of_person'])
+            })
+            console.log("Daaa")
         return trip
     }
 
