@@ -3,14 +3,20 @@ import Trip from 'App/Models/Trip'
 export default class TripsController {
 
     public async index(){
-        const trip = await Trip.query()
+        const trips = await Trip.query()
             .preload("typTrip")
             .preload("tripPrice")
             .preload("users", (query) => {
                 query.pivotColumns(['number_of_person'])
             })
-            console.log("Daaa")
-        return trip
+
+        trips.forEach((trip) =>{
+            trip.users.forEach(user =>{
+                user.number_of_person = user.$extras.pivot_number_of_person
+                user.serialize()
+            })
+        })
+        return trips
     }
 
     public async store({request,response}:HttpContextContract){
