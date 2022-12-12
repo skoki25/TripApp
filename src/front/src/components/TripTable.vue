@@ -1,10 +1,11 @@
 <template>
   <div class="hello">
-    <table>
+    <table class="table">
       <tr v-for="data in tripData" v-html='userParse(data)' :key="data.id"> 
       </tr>  
     </table>
   </div>
+  <b-table></b-table>
 </template>
 
 <script>
@@ -22,15 +23,19 @@ export default {
       var html = "<td>" + formatDate(data.trip_date) + "</td>"
       html += "<td>" + data.typTrip.type + "</td>"
       var users = data.users
+      var totalTraveler = 0
       for(var i=1; i <= 3;i++){
         var user = users.filter(e => e.id === i)
         if (user.length > 0) {
-          html += '<td>' +user[0].name+' '+user[0].surname+'</td>'
+          html += '<td>' +user[0].number_of_person+'</td>'
+          totalTraveler += user[0].number_of_person
         }
         else {
-          html +='<td></td>'
+          html +='<td>0</td>'
         }
       }
+      html += "<td>" + data.tripPrice.gus_price * data.tripPrice.avarage_gus_on_km + "</td>"
+      html += "<td>"+totalTraveler+"</td>"
       return html
     }
   },
@@ -42,7 +47,6 @@ export default {
       }
     })
     this.tripData = response.data
-    console.log(this.tripData)
   }
 }
 
