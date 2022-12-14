@@ -9,7 +9,7 @@ export default class AuthController {
         const validatios = await schema.create({
             username:schema.string({},[
                 rules.unique({table:'users',column:'username'}),
-                rules.minLength(53)
+                rules.minLength(3)
             ]),
             name:schema.string({},[
                 rules.minLength(3)
@@ -19,15 +19,16 @@ export default class AuthController {
             ]),
             password: schema.string({},[
                 rules.minLength(4)
-            ])
+            ]),
+            age:schema.number()
         })
 
-        const data = request.validate({schema:validatios})
+        const data = await request.validate({schema:validatios})
 
-        const body = request.body()
-        const user = await User.create(body)
 
-        return user        
+        const user = await User.create(data)
+        return data
+
     }
 
     public async login({request,response,auth}:HttpContextContract){
